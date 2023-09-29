@@ -9,7 +9,23 @@ const UserForm = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [transportMode, setTransportMode] = useState("car");
+  const [destinationWeather, setDestinationWeather] = useState(null);
   
+  const fetchWeatherData = async (lat, lng) => {
+    try {
+      const weatherApiKey = "0e16e90e8fbd4c9da78225559232909"; // Replace with your actual weather API key
+      const weatherApiUrl = `http://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${lat},${lng}`;
+
+      const response = await axios.get(weatherApiUrl);
+      const weatherData = response.data;
+
+      setDestinationWeather(weatherData);
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+    }
+  };
+
+
   useEffect(() => {
     // Define your API keys and URLs
     const api_key = process.env.REACT_APP_API_KEY;
@@ -84,6 +100,8 @@ const UserForm = () => {
         }
 
         // Step 5: Set filtered restaurants in the state
+        fetchWeatherData(destinationCoordinates.lat, destinationCoordinates.lng);
+        console.log(destinationWeather);
         setFilteredRestaurants(filteredRestaurants);
         setLoading(false)
       } catch (error) {
@@ -175,6 +193,14 @@ const UserForm = () => {
                 Submit
               </button>
             </div>
+            {destinationWeather && (
+              <div className="mt-4">
+                <h2>Weather at Destination</h2>
+                <p>Location: {destinationWeather.location.name}</p>
+                <p>Temperature: {destinationWeather.current.temp_c}°C</p>
+                <p>Condition: {destinationWeather.current.condition.text}</p>
+              </div>
+            )}
           </form>
         </div>
       </div>

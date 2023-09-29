@@ -1,0 +1,29 @@
+/* GlassmorphismCard.css */
+
+.glassmorphism-card {
+    width: 20rem;
+    height: 18rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .glassmorphism-content {
+    padding: 1rem;
+  }
+  
+  .font-bold {
+    color: #fff;
+  }
+  
+  .text-gray-700 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Additional styling can be added as needed */
+  
