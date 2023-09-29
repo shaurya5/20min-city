@@ -39,7 +39,7 @@ const UserForm = () => {
             at: `${destinationCoordinates.lat},${destinationCoordinates.lng}`,
             limit: 20,
             lang: "en",
-            q: {POI},
+            q: POI,
             apiKey: api_key,
           },
         });
@@ -90,6 +90,7 @@ const UserForm = () => {
     // Call the function to start the chain of API calls
     if(buttonClicked) {
       fetchCoordinates();
+      setButtonClicked(false)
     }
   }, [buttonClicked]);
 
