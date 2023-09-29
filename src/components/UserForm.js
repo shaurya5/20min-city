@@ -81,7 +81,7 @@ const UserForm = () => {
               apiKey: api_key,
               origin: `${originLat},${originLng}`,
               destination: `${restaurantLat},${restaurantLng}`,
-              transportMode: "car",
+              transportMode: {transportMode},
             },
           });
 
@@ -158,28 +158,30 @@ const UserForm = () => {
                 placeholder="POI"
                 onChange={(e) => setPOI(e.target.value)}
               />
-              <div className="flex flex-row gap-5 justify-center">
-                <div>
-                  <input
-                    id="walking"
-                    className="peer/draft"
-                    type="radio"
-                    name="status"
-                    checked
-                  />
-                  <label for="walking" className="peer-checked/draft:text-sky-500">
-                    Walking
-                  </label>
-                </div>
+              <div className="flex flex-row gap-5 justify-center" onChange={e => setTransportMode(e.target.value)}>
                 <div>
                   <input
                     id="car"
                     className="peer/published"
                     type="radio"
                     name="status"
+                    defaultChecked
+                    value='car'
                   />
                   <label for="car" className="peer-checked/published:text-sky-500">
                     Car
+                  </label>
+                </div>
+                <div>
+                  <input
+                    id="walking"
+                    className="peer/draft"
+                    type="radio"
+                    name="status"
+                    value='pedestrian'
+                  />
+                  <label for="walking" className="peer-checked/draft:text-sky-500">
+                    Walking
                   </label>
                 </div>
               </div>
