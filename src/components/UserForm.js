@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Card from "./Card";
 
 const UserForm = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
@@ -101,8 +102,10 @@ const UserForm = () => {
 
   return (
     <div className="flex flex-row">
-      <div className="flex flex-col w-[30rem] border h-screen">
-        <h2 className="text-3xl mt-1 p-3 border-b-2">Welcome to 20 minutes city</h2>
+      <div className="flex flex-col w-[30rem] border h-screen fixed">
+        <h2 className="text-3xl mt-1 p-3 border-b-2">
+          Welcome to 20 minutes city
+        </h2>
         <div className="w-full">
           <form className="bg-white rounded px-8 pt-6 pb-8 mb-4 mt-[4rem]">
             <div className="mb-4">
@@ -134,7 +137,31 @@ const UserForm = () => {
                 placeholder="POI"
                 onChange={(e) => setPOI(e.target.value)}
               />
-              {/* <p className="text-red-500 text-xs italic">Please enter Place of Interest</p> */}
+              <div className="flex flex-row gap-5 justify-center">
+                <div>
+                  <input
+                    id="walking"
+                    class="peer/draft"
+                    type="radio"
+                    name="status"
+                    checked
+                  />
+                  <label for="walking" class="peer-checked/draft:text-sky-500">
+                    Walking
+                  </label>
+                </div>
+                <div>
+                  <input
+                    id="car"
+                    class="peer/published"
+                    type="radio"
+                    name="status"
+                  />
+                  <label for="car" class="peer-checked/published:text-sky-500">
+                    Car
+                  </label>
+                </div>
+              </div>
             </div>
             <div className="flex items-center justify-between">
               <button
@@ -148,12 +175,15 @@ const UserForm = () => {
           </form>
         </div>
       </div>
-      <h1>Filtered {POI}s</h1>
-      <ol>
-        {filteredRestaurants.map((restaurant, index) => (
-          <li key={index}>{restaurant.title}</li>
-        ))}
-      </ol>
+      <div className="flex flex-col w-[75rem] mt-1 ml-[30rem]">
+        {POI && <h1 className="text-3xl">Filtered {POI}s</h1>}
+        <ol className="mt-3 grid grid-cols-3 place-items-center">
+          {filteredRestaurants.map((restaurant, index) => (
+            // <li key={index}>{index + 1}. {restaurant.title}</li>
+            <Card name={restaurant.title} address={restaurant.title} />
+          ))}
+        </ol>
+      </div>
     </div>
   );
 };
