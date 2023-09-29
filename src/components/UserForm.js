@@ -3,7 +3,7 @@ import axios from "axios";
 
 const UserForm = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-  const [location, setLocation] = useState(""); 
+  const [location, setLocation] = useState("");
   const [POI, setPOI] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
 
@@ -88,50 +88,72 @@ const UserForm = () => {
     }
 
     // Call the function to start the chain of API calls
-    if(buttonClicked) {
+    if (buttonClicked) {
       fetchCoordinates();
-      setButtonClicked(false)
+      setButtonClicked(false);
     }
   }, [buttonClicked]);
 
-  const handleSubmit = (e) => {  
+  const handleSubmit = (e) => {
     e.preventDefault();
     setButtonClicked(true);
-  }
+  };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <input
-            type="text"
-            className="form-control"
-            id="location"
-            value={location}
-            placeholder="Location"
-            onChange={(e) => setLocation(e.target.value)}
-          />
+    <div className="flex flex-row">
+      <div className="flex flex-col w-[30rem] border h-screen">
+        <h2 className="text-3xl mt-1 p-3 border-b-2">Welcome to 20 minutes city</h2>
+        <div className="w-full">
+          <form className="bg-white rounded px-8 pt-6 pb-8 mb-4 mt-[4rem]">
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="location"
+              >
+                Location Name
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="location"
+                type="text"
+                placeholder="Location"
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                for="poi"
+              >
+                Place of Interest
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                id="poi"
+                type="text"
+                placeholder="POI"
+                onChange={(e) => setPOI(e.target.value)}
+              />
+              {/* <p className="text-red-500 text-xs italic">Please enter Place of Interest</p> */}
+            </div>
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="form-group">
-          <input
-            type="text"
-            className="form-control"
-            id="place"
-            value={POI}
-            placeholder="Place of Interest"
-            onChange={(e) => setPOI(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-      <h1>Filtered Restaurants:</h1>
-      <ul>
+      </div>
+      <h1>Filtered {POI}s</h1>
+      <ol>
         {filteredRestaurants.map((restaurant, index) => (
           <li key={index}>{restaurant.title}</li>
         ))}
-      </ul>
+      </ol>
     </div>
   );
 };
