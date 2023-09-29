@@ -81,7 +81,7 @@ const UserForm = () => {
               apiKey: api_key,
               origin: `${originLat},${originLng}`,
               destination: `${restaurantLat},${restaurantLng}`,
-              transportMode: {transportMode},
+              transportMode,
             },
           });
 
