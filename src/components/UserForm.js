@@ -7,7 +7,9 @@ const UserForm = () => {
   const [location, setLocation] = useState("");
   const [POI, setPOI] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [transportMode, setTransportMode] = useState("car");
+  
   useEffect(() => {
     // Define your API keys and URLs
     const api_key = process.env.REACT_APP_API_KEY;
@@ -17,11 +19,11 @@ const UserForm = () => {
 
     // Step 1: Get Coordinates
     const originQuery = location;
-    const destinationQuery =
-      "Bits Pilani Hyderabad Campus, CRPF, Secunderabad, Telangana, India";
+    const destinationQuery = location;
 
     async function fetchCoordinates() {
       try {
+        setLoading(true);
         const originResponse = await axios.get(getCoordinatesUrl, {
           params: { q: originQuery, apiKey: api_key },
         });
@@ -56,7 +58,7 @@ const UserForm = () => {
           const originLng = originCoordinates.lng;
           const restaurantLat = restaurantCoordinates.lat;
           const restaurantLng = restaurantCoordinates.lng;
-
+          const address = restaurant.address.label
           // Calculate ETA from origin to restaurant
           const etaResponse = await axios.get(findEtaUrl, {
             params: {
@@ -83,6 +85,7 @@ const UserForm = () => {
 
         // Step 5: Set filtered restaurants in the state
         setFilteredRestaurants(filteredRestaurants);
+        setLoading(false)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -141,23 +144,23 @@ const UserForm = () => {
                 <div>
                   <input
                     id="walking"
-                    class="peer/draft"
+                    className="peer/draft"
                     type="radio"
                     name="status"
                     checked
                   />
-                  <label for="walking" class="peer-checked/draft:text-sky-500">
+                  <label for="walking" className="peer-checked/draft:text-sky-500">
                     Walking
                   </label>
                 </div>
                 <div>
                   <input
                     id="car"
-                    class="peer/published"
+                    className="peer/published"
                     type="radio"
                     name="status"
                   />
-                  <label for="car" class="peer-checked/published:text-sky-500">
+                  <label for="car" className="peer-checked/published:text-sky-500">
                     Car
                   </label>
                 </div>
@@ -176,13 +179,11 @@ const UserForm = () => {
         </div>
       </div>
       <div className="flex flex-col w-[75rem] mt-1 ml-[30rem]">
-        {POI && <h1 className="text-3xl">Filtered {POI}s</h1>}
-        <ol className="mt-3 grid grid-cols-3 place-items-center">
+        {!loading ? (<ol className="mt-3 grid grid-cols-3 place-items-center">
           {filteredRestaurants.map((restaurant, index) => (
-            // <li key={index}>{index + 1}. {restaurant.title}</li>
-            <Card name={restaurant.title} address={restaurant.title} />
+            <Card key={index} name={restaurant.title} address={restaurant.address.label} distance={restaurant.distance} lat={restaurant.position.lat} long={restaurant.position.lng} />
           ))}
-        </ol>
+        </ol>) : "Loading..."}
       </div>
     </div>
   );
