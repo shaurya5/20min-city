@@ -172,6 +172,15 @@ const UserForm = () => {
                 />
                 <label htmlFor="walking">Walking</label>
               </div>
+              <div>
+                <input
+                  id="bicycle"
+                  type="radio"
+                  name="transport"
+                  value="bicycle"
+                />
+                <label htmlFor="walking">Cycle</label>
+              </div>
             </div>
             <div className="form-group">
               <button
