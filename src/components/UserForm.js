@@ -247,7 +247,7 @@ const UserForm = () => {
       </div>
       <br></br>
       <div className="mapImg">
-        {filteredrequiredPoints != [] && (
+        {Object.keys(originCoordinates).length !== 0 && (
           <button className="submit-button mapbtn" onClick={handleMap}>
             Open Map
           </button>
