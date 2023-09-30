@@ -15,6 +15,7 @@ const UserForm = () => {
   const [transportMode, setTransportMode] = useState("car");
   const [destinationWeather, setDestinationWeather] = useState(null);
   const [isMapShown, setIsMapShown] = useState(false);
+  const [originCoordinates, setOriginCoordinates] = useState({});
 
   const fetchWeatherData = async (lat, lng) => {
     try {
@@ -55,7 +56,7 @@ const UserForm = () => {
         const originCoordinates = originResponse.data.items[0].position;
         const destinationCoordinates =
           destinationResponse.data.items[0].position;
-
+        setOriginCoordinates(originCoordinates);
         // Step 2: Search for requiredPoints (POI)
         const poiResponse = await axios.get(poiUrl, {
           params: {
@@ -252,7 +253,7 @@ const UserForm = () => {
           </button>
         )}
         {isMapShown && !loading && (
-          <MapDisplay className="map" markers={filteredrequiredPoints} />
+          <MapDisplay className="map" coordinates={originCoordinates} />
         )}
       </div>
 

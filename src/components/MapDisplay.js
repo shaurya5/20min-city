@@ -8,11 +8,11 @@ import { Popup } from "leaflet";
 import L from "leaflet";
 L.Icon.Default.imagePath='images/'
 
-const MapDisplay = ({ markers }) => {
-  const [center, setCenter] = useState({ lat: 17.5449, lng: 78.5718 });
+const MapDisplay = ({ coordinates }) => {
+  const [center, setCenter] = useState(coordinates);
   const ZOOM_LEVEL = 12;
   const mapRef = useRef();
-
+  
   return (
     <>
       <div className="row">
@@ -23,11 +23,11 @@ const MapDisplay = ({ markers }) => {
                 url={osm.maptiler.url}
                 attribution={osm.maptiler.attribution}
               />
-              {markers.forEach((marker, idx) => {
+              {/* {markers.forEach((marker, idx) => {
                 <Marker key={idx} position={[17.5449, 78.5718]}>
                   <Popup><span>A pretty CSS3 popup. <br/> Easily customizable.</span></Popup>
                 </Marker>
-              })}
+              })} */}
             </MapContainer>
           </div>
         </div>
