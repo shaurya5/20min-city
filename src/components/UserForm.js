@@ -3,16 +3,17 @@ import axios from "axios";
 import Card from "./Card";
 import "./userForm.css";
 import logoImage from "../logo.png";
+import weatherImage from "../weather.png";
 
 const UserForm = () => {
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [filteredrequiredPoints, setFilteredrequiredPoints] = useState([]);
   const [location, setLocation] = useState("");
   const [POI, setPOI] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [transportMode, setTransportMode] = useState("car");
   const [destinationWeather, setDestinationWeather] = useState(null);
-  
+
   const fetchWeatherData = async (lat, lng) => {
     try {
       const weatherApiKey = "0e16e90e8fbd4c9da78225559232909"; // Replace with your actual weather API key
@@ -54,35 +55,35 @@ const UserForm = () => {
         const destinationCoordinates =
           destinationResponse.data.items[0].position;
 
-        // Step 2: Search for Restaurants (POI)
+        // Step 2: Search for requiredPoints (POI)
         const poiResponse = await axios.get(poiUrl, {
           params: {
             at: `${destinationCoordinates.lat},${destinationCoordinates.lng}`,
-            limit: 4,
+            limit: 10,
             lang: "en",
             q: POI,
             apiKey: api_key,
           },
         });
 
-        const restaurants = poiResponse.data.items;
+        const requiredPoints = poiResponse.data.items;
 
-        // Step 4: Find ETA for Restaurants
-        const filteredRestaurants = [];
+        // Step 4: Find ETA for requiredPoints
+        const filteredrequiredPoints = [];
 
-        for (const restaurant of restaurants) {
-          const restaurantCoordinates = restaurant.position;
+        for (const requiredPoint of requiredPoints) {
+          const requiredPointCoordinates = requiredPoint.position;
           const originLat = originCoordinates.lat;
           const originLng = originCoordinates.lng;
-          const restaurantLat = restaurantCoordinates.lat;
-          const restaurantLng = restaurantCoordinates.lng;
-          const address = restaurant.address.label
-          // Calculate ETA from origin to restaurant
+          const requiredPointLat = requiredPointCoordinates.lat;
+          const requiredPointLng = requiredPointCoordinates.lng;
+          const address = requiredPoint.address.label
+          // Calculate ETA from origin to requiredPoint
           const etaResponse = await axios.get(findEtaUrl, {
             params: {
               apiKey: api_key,
               origin: `${originLat},${originLng}`,
-              destination: `${restaurantLat},${restaurantLng}`,
+              destination: `${requiredPointLat},${requiredPointLng}`,
               transportMode,
             },
           });
@@ -97,14 +98,14 @@ const UserForm = () => {
 
           // Check if travel time is within 20 minutes (1200 seconds)
           if (timeDifference < 1200 * 1000) {
-            filteredRestaurants.push(restaurant);
+            filteredrequiredPoints.push(requiredPoint);
           }
         }
 
-        // Step 5: Set filtered restaurants in the state
+        // Step 5: Set filtered requiredPoints in the state
         fetchWeatherData(destinationCoordinates.lat, destinationCoordinates.lng);
-        
-        setFilteredRestaurants(filteredRestaurants);
+
+        setFilteredrequiredPoints(filteredrequiredPoints);
         setLoading(false)
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -124,10 +125,10 @@ const UserForm = () => {
   };
 
   return (
-    
+
     <div className="flex flex-row">
       <div className="user-form-container">
-      <img className="logo-img" src={logoImage} alt="Logo" />
+        <img className="logo-img" src={logoImage} alt="Logo" />
         <h2 className="user-form-heading">We need to know some things..</h2>
         <div className="user-form-content">
           <form className="user-form">
@@ -182,28 +183,35 @@ const UserForm = () => {
               </button>
             </div>
             {destinationWeather && (
-              <div className="weather-info">
-                <h2>Weather at Destination</h2>
-                <p>Location: {destinationWeather.location.name}</p>
-                <p>Temperature: {destinationWeather.current.temp_c}°C</p>
-                <p>Condition: {destinationWeather.current.condition.text}</p>
+              <div className="weather-card">
+              <div className="weather-card__content">
+                <div className="weather-card__info">
+                  <h2 className="weather-card__title">Weather at Destination</h2>
+                  <p className="weather-card__location">Location: {destinationWeather.location.name}</p>
+                  <p className="weather-card__temperature">Temperature: {destinationWeather.current.temp_c}°C</p>
+                  <p className="weather-card__condition">Condition: {destinationWeather.current.condition.text}</p>
+                </div>
+                <div className="weather-card__image">
+                  <img src={weatherImage} alt="Weather Icon" />
+                </div>
               </div>
+            </div>
             )}
           </form>
         </div>
       </div>
-      <div className="restaurant-list-container">
+      <div className="requiredPoint-list-container">
         <p className="logo-text">Welcome to 20 minutes city</p>
         {!loading ? (
-          <ol className="restaurant-list">
-            {filteredRestaurants.map((restaurant, index) => (
+          <ol className="requiredPoint-list">
+            {filteredrequiredPoints.map((requiredPoint, index) => (
               <Card
                 key={index}
-                name={restaurant.title}
-                address={restaurant.address.label}
-                distance={restaurant.distance}
-                lat={restaurant.position.lat}
-                long={restaurant.position.lng}
+                name={requiredPoint.title}
+                address={requiredPoint.address.label}
+                distance={requiredPoint.distance}
+                lat={requiredPoint.position.lat}
+                long={requiredPoint.position.lng}
               />
             ))}
           </ol>
