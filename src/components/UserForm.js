@@ -170,6 +170,7 @@ const UserForm = () => {
                   name="transport"
                   defaultChecked
                   value="car"
+                  onChange={e => setTransportMode(e.target.value)}
                 />
                 <label htmlFor="car">Car</label>
               </div>
@@ -179,6 +180,7 @@ const UserForm = () => {
                   type="radio"
                   name="transport"
                   value="pedestrian"
+                  onChange={e => setTransportMode(e.target.value)}
                 />
                 <label htmlFor="walking">Walking</label>
               </div>
@@ -188,8 +190,9 @@ const UserForm = () => {
                   type="radio"
                   name="transport"
                   value="bicycle"
+                  onChange={e => setTransportMode(e.target.value)}
                 />
-                <label htmlFor="walking">Cycle</label>
+                <label htmlFor="bicycle">Cycle</label>
               </div>
             </div>
             <div className="form-group submit">
