@@ -63,7 +63,7 @@
     color: lightgreen;
   }
   
-  .google-maps-link {
+  .here-maps-link {
     color: #121212;
     display: flex;
     align-items: center;
@@ -84,7 +84,7 @@
     margin: auto;
   }
   
-  .google-maps-icon {
+  .here-maps-icon {
     width: 20px;
     height: 20px;
     margin-right: 0.5rem;
