@@ -16,6 +16,8 @@ const UserForm = () => {
   const [destinationWeather, setDestinationWeather] = useState(null);
   const [isMapShown, setIsMapShown] = useState(false);
   const [originCoordinates, setOriginCoordinates] = useState({});
+  const [useLiveLocation, setUseLiveLocation] = useState(false);
+
 
   console.log(originCoordinates)
   const fetchWeatherData = async (lat, lng) => {
@@ -32,6 +34,8 @@ const UserForm = () => {
     }
   };
 
+
+
   useEffect(() => {
     // Define your API keys and URLs
     const api_key = process.env.REACT_APP_API_KEY;
@@ -39,24 +43,36 @@ const UserForm = () => {
     const poiUrl = "https://discover.search.hereapi.com/v1/discover";
     const findEtaUrl = "https://router.hereapi.com/v8/routes";
 
+    
     // Step 1: Get Coordinates
-    const originQuery = location;
-    const destinationQuery = location;
-
     async function fetchCoordinates() {
       try {
         setLoading(true);
-        const originResponse = await axios.get(getCoordinatesUrl, {
-          params: { q: originQuery, apiKey: api_key },
-        });
+        let originCoordinates = {};
+        let destinationCoordinates = {};
+        if (useLiveLocation) {
+          // Fetch live location coordinates using IP address (You can use a suitable IP Geolocation service)
+          const response = await axios.get("https://ipapi.co/json/");
+          const { latitude, longitude } = response.data;
+          destinationCoordinates = {lat: latitude, lng: longitude};
+          originCoordinates = { lat: latitude, lng: longitude };
+        } else {
+          const originQuery = location;
+          const destinationQuery = location;
+          // Fetch coordinates based on the manually entered location
+          const originResponse = await axios.get(getCoordinatesUrl, {
+            params: { q: originQuery, apiKey: api_key },
+          });
 
-        const destinationResponse = await axios.get(getCoordinatesUrl, {
-          params: { q: destinationQuery, apiKey: api_key },
-        });
-
-        const originCoordinates = originResponse.data.items[0].position;
-        const destinationCoordinates =
-          destinationResponse.data.items[0].position;
+          originCoordinates = originResponse.data.items[0].position;
+          console.log(originCoordinates);
+          const destinationResponse = await axios.get(getCoordinatesUrl, {
+            params: { q: destinationQuery, apiKey: api_key },
+          });
+          destinationCoordinates = destinationResponse.data.items[0].position;
+        }
+        
+        
         setOriginCoordinates(originCoordinates);
         // Step 2: Search for requiredPoints (POI)
         const poiResponse = await axios.get(poiUrl, {
@@ -68,6 +84,7 @@ const UserForm = () => {
             apiKey: api_key,
           },
         });
+        console.log(poiResponse);
 
         const requiredPoints = poiResponse.data.items;
 
@@ -123,7 +140,7 @@ const UserForm = () => {
       fetchCoordinates();
       setButtonClicked(false);
     }
-  }, [buttonClicked]);
+  }, [buttonClicked, location, useLiveLocation]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -142,7 +159,21 @@ const UserForm = () => {
         <h2 className="user-form-heading">We need to know some things..</h2>
         <div className="user-form-content">
           <form className="user-form">
-            <div className="form-group named">
+            <div className="form-group">
+              <div className="liveLoc">                
+                <label className="isLive">
+                  <input
+                    type="checkbox"
+                    name="locationOption"
+                    value="live"
+                    checked={useLiveLocation}
+                    onChange={() => setUseLiveLocation(!useLiveLocation)}
+                  />
+                  <p>Use Live Location</p>
+                </label>
+              </div>
+            </div>
+            {!useLiveLocation && <div className="form-group named">
               <label htmlFor="location">Location Name</label>
               <input
                 className="form-control"
@@ -151,9 +182,9 @@ const UserForm = () => {
                 placeholder="Location"
                 onChange={(e) => setLocation(e.target.value)}
               />
-            </div>
+            </div>}
             <div className="form-group named">
-              
+
               <label htmlFor="poi">Place of Interest</label>
               <input
                 className="form-control"
@@ -262,7 +293,7 @@ const UserForm = () => {
         )}
       </div>
 
-      
+
     </div>
   );
 };
