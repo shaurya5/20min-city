@@ -61,7 +61,7 @@ const UserForm = () => {
         const poiResponse = await axios.get(poiUrl, {
           params: {
             at: `${destinationCoordinates.lat},${destinationCoordinates.lng}`,
-            limit: 10,
+            limit: 2,
             lang: "en",
             q: POI,
             apiKey: api_key,
