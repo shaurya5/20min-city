@@ -1,21 +1,21 @@
 import React from "react";
+import "./card.css";
 
 function Card({ name, address, distance, lat, long }) {
   const googleMapsLink = `https://www.google.com/maps/place/${lat},${long}`;
   return (
-    <div className="w-[20rem] h-[18rem] rounded overflow-hidden shadow-lg">
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{name}</div>
-        <p className="text-gray-700 text-base">
-          <strong>Address: </strong>
-          {address}
+    <div className="card">
+      <div className="card-content">
+        <div className="card-title">{name}</div>
+        <p className="card-text">
+          <strong>Address:</strong> {address}
         </p>
-        <p className="text-gray-700 text-base">
-          <strong>Distance: </strong>
-          {distance / 1000} km
+        <p className="card-text">
+          <strong>Distance:</strong> {distance / 1000} km
         </p>
-        <a href={googleMapsLink} className="text-blue-700 flex flex-row items-center justify-center">
+        <a href={googleMapsLink} className="google-maps-link">
           <svg
+            className="google-maps-icon"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
             fill="#000000"
