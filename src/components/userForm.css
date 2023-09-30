@@ -75,7 +75,6 @@
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.2s ease-in-out;
-  margin-bottom: 2rem;
 }
 
 .submit-button:hover {
@@ -177,11 +176,14 @@ body {
 
 .mapImg {
   margin-left: 40rem;
+  margin-bottom: 5rem;
 }
 
 .mapbtn{
   position: relative;
   left: -3rem;
+  margin-bottom: 2rem;
 }
+
 
   
