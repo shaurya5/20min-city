@@ -165,3 +165,12 @@
     margin: 10px 0; /* Increased margin */
   }
   
+  body {
+    background-color: #111;
+  }
+  
+  .logo-text{
+    color : #dfd462;
+    text-shadow:2px 2px #797171;
+  }
+  

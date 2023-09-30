@@ -8,10 +8,25 @@
     background-color: #282828;
     border-radius: 20px;
     text-align: left;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .card:hover {
+    transform: scale(1.05); /* Increase the size on hover */
   }
   
   .card-content {
     padding: 1.5rem;
+  }
+
+  .title{
+    display: flex;
+    gap: 1rem;
+  }
+
+  .pin-image{
+    margin-top: 0.5rem;
+    height: 1.8rem;
   }
   
   .card-title {
@@ -20,15 +35,32 @@
     margin-bottom: 1rem;
     font-family: "DM Sans", Roboto, -apple-system, "Segoe UI", sans-serif;
     height: 7rem;
+    text-align: left;
+
   }
   
   .card-text {
-    color: #8b8b8b;
+    color: #d8c7c7;
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
     text-align: left;
     padding-bottom: 2rem;
-    height: 10rem;
+    height: 15rem;
+  }
+
+  .address{
+    padding: 1rem;
+    transition: font-weight 0.1s ease-in-out;
+  }
+
+  .address:hover{
+    font-weight: bolder;
+  }
+
+  .distance{
+    text-align: center;
+    height: 3rem;
+    color: lightgreen;
   }
   
   .google-maps-link {
@@ -49,6 +81,7 @@
     width: 15rem;
     border-radius: 20px;
     font-weight:bold;
+    margin: auto;
   }
   
   .google-maps-icon {

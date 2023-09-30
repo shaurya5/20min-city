@@ -210,7 +210,7 @@ const UserForm = () => {
         </div>
       </div>
       <div className="requiredPoint-list-container">
-        <p className="logo-text">Welcome to 20 minutes city</p>
+        <p className="logo-text">Welcome to 20 minute finds!</p>
         {!loading ? (
           <ol className="requiredPoint-list">
             {filteredrequiredPoints.map((requiredPoint, index) => (
