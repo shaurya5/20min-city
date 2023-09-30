@@ -1,11 +1,13 @@
 /* card.css */
 .card {
-    width: 20rem;
-    height: 25rem;
+    width: 23rem;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 2rem;
+    background-color: #282828;
+    border-radius: 20px;
+    text-align: left;
   }
   
   .card-content {
@@ -16,20 +18,37 @@
     font-weight: bold;
     font-size: 1.5rem;
     margin-bottom: 1rem;
+    font-family: "DM Sans", Roboto, -apple-system, "Segoe UI", sans-serif;
+    height: 7rem;
   }
   
   .card-text {
-    color: #333;
-    font-size: 1rem;
+    color: #8b8b8b;
+    font-size: 1.25rem;
     margin-bottom: 0.5rem;
+    text-align: left;
+    padding-bottom: 2rem;
+    height: 8rem;
   }
   
   .google-maps-link {
-    color: #007bff;
+    color: #121212;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    position: relative;
+    bottom: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+    background-color: #a688fa;
+    height: 3rem;
+    width: 15rem;
+    border-radius: 20px;
+    font-weight:bold;
   }
   
   .google-maps-icon {

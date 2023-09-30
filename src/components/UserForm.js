@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "./Card";
 import "./userForm.css";
+import logoImage from "../logo.png";
 
 const UserForm = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
@@ -123,9 +124,11 @@ const UserForm = () => {
   };
 
   return (
+    
     <div className="flex flex-row">
       <div className="user-form-container">
-        <h2 className="user-form-heading">Welcome to 20 minutes city</h2>
+      <img className="logo-img" src={logoImage} alt="Logo" />
+        <h2 className="user-form-heading">We need to know some things..</h2>
         <div className="user-form-content">
           <form className="user-form">
             <div className="form-group">
