@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "./Card";
+import "./userForm.css";
 
 const UserForm = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
@@ -18,7 +19,7 @@ const UserForm = () => {
 
       const response = await axios.get(weatherApiUrl);
       const weatherData = response.data;
-
+      console.log(weatherData);
       setDestinationWeather(weatherData);
     } catch (error) {
       console.error("Error fetching weather data:", error);
@@ -56,7 +57,7 @@ const UserForm = () => {
         const poiResponse = await axios.get(poiUrl, {
           params: {
             at: `${destinationCoordinates.lat},${destinationCoordinates.lng}`,
-            limit: 20,
+            limit: 4,
             lang: "en",
             q: POI,
             apiKey: api_key,
@@ -81,7 +82,7 @@ const UserForm = () => {
               apiKey: api_key,
               origin: `${originLat},${originLng}`,
               destination: `${restaurantLat},${restaurantLng}`,
-              transportMode: {transportMode},
+              transportMode,
             },
           });
 
@@ -101,7 +102,7 @@ const UserForm = () => {
 
         // Step 5: Set filtered restaurants in the state
         fetchWeatherData(destinationCoordinates.lat, destinationCoordinates.lng);
-        console.log(destinationWeather);
+        
         setFilteredRestaurants(filteredRestaurants);
         setLoading(false)
       } catch (error) {
@@ -123,72 +124,54 @@ const UserForm = () => {
 
   return (
     <div className="flex flex-row">
-      <div className="flex flex-col w-[30rem] border h-screen fixed">
-        <h2 className="text-3xl mt-1 p-3 border-b-2">
-          Welcome to 20 minutes city
-        </h2>
-        <div className="w-full">
-          <form className="bg-white rounded px-8 pt-6 pb-8 mb-4 mt-[4rem]">
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                for="location"
-              >
-                Location Name
-              </label>
+      <div className="user-form-container">
+        <h2 className="user-form-heading">Welcome to 20 minutes city</h2>
+        <div className="user-form-content">
+          <form className="user-form">
+            <div className="form-group">
+              <label htmlFor="location">Location Name</label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="form-control"
                 id="location"
                 type="text"
                 placeholder="Location"
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                for="poi"
-              >
-                Place of Interest
-              </label>
+            <div className="form-group">
+              <label htmlFor="poi">Place of Interest</label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="form-control"
                 id="poi"
                 type="text"
                 placeholder="POI"
                 onChange={(e) => setPOI(e.target.value)}
               />
-              <div className="flex flex-row gap-5 justify-center" onChange={e => setTransportMode(e.target.value)}>
-                <div>
-                  <input
-                    id="car"
-                    className="peer/published"
-                    type="radio"
-                    name="status"
-                    defaultChecked
-                    value='car'
-                  />
-                  <label for="car" className="peer-checked/published:text-sky-500">
-                    Car
-                  </label>
-                </div>
-                <div>
-                  <input
-                    id="walking"
-                    className="peer/draft"
-                    type="radio"
-                    name="status"
-                    value='pedestrian'
-                  />
-                  <label for="walking" className="peer-checked/draft:text-sky-500">
-                    Walking
-                  </label>
-                </div>
+            </div>
+            <div className="form-group transport-options">
+              <div>
+                <input
+                  id="car"
+                  type="radio"
+                  name="transport"
+                  defaultChecked
+                  value="car"
+                />
+                <label htmlFor="car">Car</label>
+              </div>
+              <div>
+                <input
+                  id="walking"
+                  type="radio"
+                  name="transport"
+                  value="pedestrian"
+                />
+                <label htmlFor="walking">Walking</label>
               </div>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="form-group">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="submit-button"
                 type="button"
                 onClick={handleSubmit}
               >
@@ -196,7 +179,7 @@ const UserForm = () => {
               </button>
             </div>
             {destinationWeather && (
-              <div className="mt-4">
+              <div className="weather-info">
                 <h2>Weather at Destination</h2>
                 <p>Location: {destinationWeather.location.name}</p>
                 <p>Temperature: {destinationWeather.current.temp_c}°C</p>
@@ -206,15 +189,27 @@ const UserForm = () => {
           </form>
         </div>
       </div>
-      <div className="flex flex-col w-[75rem] mt-1 ml-[30rem]">
-        {!loading ? (<ol className="mt-3 grid grid-cols-3 place-items-center">
-          {filteredRestaurants.map((restaurant, index) => (
-            <Card key={index} name={restaurant.title} address={restaurant.address.label} distance={restaurant.distance} lat={restaurant.position.lat} long={restaurant.position.lng} />
-          ))}
-        </ol>) : "Loading..."}
+      <div className="restaurant-list-container">
+        {!loading ? (
+          <ol className="restaurant-list">
+            {filteredRestaurants.map((restaurant, index) => (
+              <Card
+                key={index}
+                name={restaurant.title}
+                address={restaurant.address.label}
+                distance={restaurant.distance}
+                lat={restaurant.position.lat}
+                long={restaurant.position.lng}
+              />
+            ))}
+          </ol>
+        ) : (
+          "Loading..."
+        )}
       </div>
     </div>
   );
 };
+
 
 export default UserForm;
