@@ -58,7 +58,7 @@ const UserForm = () => {
         const poiResponse = await axios.get(poiUrl, {
           params: {
             at: `${destinationCoordinates.lat},${destinationCoordinates.lng}`,
-            limit: 2,
+            limit: 4,
             lang: "en",
             q: POI,
             apiKey: api_key,
@@ -202,6 +202,7 @@ const UserForm = () => {
         </div>
       </div>
       <div className="restaurant-list-container">
+        <p className="logo-text">Welcome to 20 minutes city</p>
         {!loading ? (
           <ol className="restaurant-list">
             {filteredRestaurants.map((restaurant, index) => (
