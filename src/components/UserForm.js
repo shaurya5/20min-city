@@ -13,7 +13,9 @@ const UserForm = () => {
   const [loading, setLoading] = useState(false);
   const [transportMode, setTransportMode] = useState("car");
   const [destinationWeather, setDestinationWeather] = useState(null);
+  const [isMapShown, setIsMapShown] = useState(false)
   
+  console.log(filteredRestaurants)
   const fetchWeatherData = async (lat, lng) => {
     try {
       const weatherApiKey = "0e16e90e8fbd4c9da78225559232909"; // Replace with your actual weather API key
@@ -126,7 +128,7 @@ const UserForm = () => {
 
   const handleMap = (e) => {
     e.preventDefault();
-    return <MapDisplay />
+    setIsMapShown(!isMapShown);
   }
   return (
     
@@ -226,6 +228,7 @@ const UserForm = () => {
         )}
       </div>
       <button onClick={handleMap}>Open Map</button>
+      {isMapShown && <MapDisplay markers={filteredRestaurants} />}
     </div>
   );
 };
