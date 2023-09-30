@@ -3,6 +3,7 @@ import axios from "axios";
 import Card from "./Card";
 import "./userForm.css";
 import logoImage from "../logo.png";
+import MapDisplay from "./MapDisplay";
 
 const UserForm = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
@@ -123,6 +124,10 @@ const UserForm = () => {
     setButtonClicked(true);
   };
 
+  const handleMap = (e) => {
+    e.preventDefault();
+    return <MapDisplay />
+  }
   return (
     
     <div className="flex flex-row">
@@ -220,6 +225,7 @@ const UserForm = () => {
           "Loading..."
         )}
       </div>
+      <button onClick={handleMap}>Open Map</button>
     </div>
   );
 };
