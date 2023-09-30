@@ -16,7 +16,6 @@ const UserForm = () => {
   const [destinationWeather, setDestinationWeather] = useState(null);
   const [isMapShown, setIsMapShown] = useState(false)
   
-  console.log(filteredRestaurants)
   const fetchWeatherData = async (lat, lng) => {
     try {
       const weatherApiKey = "0e16e90e8fbd4c9da78225559232909"; // Replace with your actual weather API key
@@ -236,7 +235,7 @@ const UserForm = () => {
         )}
       </div>
       <button onClick={handleMap}>Open Map</button>
-      {isMapShown && <MapDisplay markers={filteredRestaurants} />}
+      {isMapShown && <MapDisplay markers={filteredrequiredPoints} />}
     </div>
   );
 };
