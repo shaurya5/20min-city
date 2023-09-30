@@ -17,6 +17,7 @@ const UserForm = () => {
   const [isMapShown, setIsMapShown] = useState(false);
   const [originCoordinates, setOriginCoordinates] = useState({});
 
+  console.log(originCoordinates)
   const fetchWeatherData = async (lat, lng) => {
     try {
       const weatherApiKey = "0e16e90e8fbd4c9da78225559232909"; // Replace with your actual weather API key
@@ -61,7 +62,7 @@ const UserForm = () => {
         const poiResponse = await axios.get(poiUrl, {
           params: {
             at: `${destinationCoordinates.lat},${destinationCoordinates.lng}`,
-            limit: 10,
+            limit: 2,
             lang: "en",
             q: POI,
             apiKey: api_key,
@@ -257,7 +258,7 @@ const UserForm = () => {
           </button>
         )}
         {isMapShown && !loading && (
-          <MapDisplay className="map" coordinates={originCoordinates} />
+          <MapDisplay className="map" initial={originCoordinates} coordinates={filteredrequiredPoints} />
         )}
       </div>
 
