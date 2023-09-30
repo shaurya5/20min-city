@@ -141,7 +141,7 @@ const UserForm = () => {
         <h2 className="user-form-heading">We need to know some things..</h2>
         <div className="user-form-content">
           <form className="user-form">
-            <div className="form-group">
+            <div className="form-group named">
               <label htmlFor="location">Location Name</label>
               <input
                 className="form-control"
@@ -151,7 +151,8 @@ const UserForm = () => {
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
-            <div className="form-group">
+            <div className="form-group named">
+              
               <label htmlFor="poi">Place of Interest</label>
               <input
                 className="form-control"
@@ -191,7 +192,7 @@ const UserForm = () => {
                 <label htmlFor="walking">Cycle</label>
               </div>
             </div>
-            <div className="form-group">
+            <div className="form-group submit">
               <button
                 className="submit-button"
                 type="button"
