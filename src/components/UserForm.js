@@ -248,7 +248,7 @@ const UserForm = () => {
       <br></br>
       <div className="mapImg">
         {filteredrequiredPoints != [] && (
-          <button className="mapBtn" onClick={handleMap}>
+          <button className="submit-button mapbtn" onClick={handleMap}>
             Open Map
           </button>
         )}
