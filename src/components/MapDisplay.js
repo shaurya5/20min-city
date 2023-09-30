@@ -21,10 +21,11 @@ function MapDisplay({ initial, coordinates }) {
       {coordinates.map((coordinate, index) => {
         console.log(coordinate, index)
         const position = [coordinate.position.lat, coordinate.position.lng];
+        const hereMapsLink = `https://share.here.com/l/${coordinate.position.lat},${coordinate.position.lng},z=20`;
         return (
           <Marker key={index} position={position}>
             <Popup>
-              {coordinate.title}
+              <a href = {hereMapsLink}>{coordinate.title}</a>
             </Popup>
           </Marker>
         )
