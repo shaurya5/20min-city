@@ -56,7 +56,7 @@ const UserForm = () => {
         const poiResponse = await axios.get(poiUrl, {
           params: {
             at: `${destinationCoordinates.lat},${destinationCoordinates.lng}`,
-            limit: 20,
+            limit: 2,
             lang: "en",
             q: POI,
             apiKey: api_key,
@@ -182,6 +182,18 @@ const UserForm = () => {
                   />
                   <label for="walking" className="peer-checked/draft:text-sky-500">
                     Walking
+                  </label>
+                </div>
+                <div>
+                  <input
+                    id="bicycle"
+                    className="peer/draft"
+                    type="radio"
+                    name="status"
+                    value='bicycle'
+                  />
+                  <label for="bicycle" className="peer-checked/draft:text-sky-500">
+                    Cycling
                   </label>
                 </div>
               </div>
