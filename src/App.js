@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       {/* <Navbar /> */}
       <UserForm />
-      {/* <MapDisp  lay /> */}
+      {/* <MapDisplay /> */}
     </div>
   );
 }

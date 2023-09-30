@@ -14,8 +14,8 @@ const UserForm = () => {
   const [loading, setLoading] = useState(false);
   const [transportMode, setTransportMode] = useState("car");
   const [destinationWeather, setDestinationWeather] = useState(null);
-  const [isMapShown, setIsMapShown] = useState(false)
-  
+  const [isMapShown, setIsMapShown] = useState(false);
+
   const fetchWeatherData = async (lat, lng) => {
     try {
       const weatherApiKey = "0e16e90e8fbd4c9da78225559232909"; // Replace with your actual weather API key
@@ -29,7 +29,6 @@ const UserForm = () => {
       console.error("Error fetching weather data:", error);
     }
   };
-
 
   useEffect(() => {
     // Define your API keys and URLs
@@ -79,7 +78,7 @@ const UserForm = () => {
           const originLng = originCoordinates.lng;
           const requiredPointLat = requiredPointCoordinates.lat;
           const requiredPointLng = requiredPointCoordinates.lng;
-          const address = requiredPoint.address.label
+          const address = requiredPoint.address.label;
           // Calculate ETA from origin to requiredPoint
           const etaResponse = await axios.get(findEtaUrl, {
             params: {
@@ -105,10 +104,13 @@ const UserForm = () => {
         }
 
         // Step 5: Set filtered requiredPoints in the state
-        fetchWeatherData(destinationCoordinates.lat, destinationCoordinates.lng);
+        fetchWeatherData(
+          destinationCoordinates.lat,
+          destinationCoordinates.lng
+        );
 
         setFilteredrequiredPoints(filteredrequiredPoints);
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -129,10 +131,10 @@ const UserForm = () => {
   const handleMap = (e) => {
     e.preventDefault();
     setIsMapShown(!isMapShown);
-  }
-  return (
+  };
 
-    <div className="flex flex-row">
+  return (
+    <div className="flex flex-col">
       <div className="user-form-container">
         <img className="logo-img" src={logoImage} alt="Logo" />
         <h2 className="user-form-heading">We need to know some things..</h2>
@@ -199,18 +201,26 @@ const UserForm = () => {
             </div>
             {destinationWeather && (
               <div className="weather-card">
-              <div className="weather-card__content">
-                <div className="weather-card__info">
-                  <h2 className="weather-card__title">Weather at Destination</h2>
-                  <p className="weather-card__location">Location: {destinationWeather.location.name}</p>
-                  <p className="weather-card__temperature">Temperature: {destinationWeather.current.temp_c}°C</p>
-                  <p className="weather-card__condition">Condition: {destinationWeather.current.condition.text}</p>
-                </div>
-                <div className="weather-card__image">
-                  <img src={weatherImage} alt="Weather Icon" />
+                <div className="weather-card__content">
+                  <div className="weather-card__info">
+                    <h2 className="weather-card__title">
+                      Weather at Destination
+                    </h2>
+                    <p className="weather-card__location">
+                      Location: {destinationWeather.location.name}
+                    </p>
+                    <p className="weather-card__temperature">
+                      Temperature: {destinationWeather.current.temp_c}°C
+                    </p>
+                    <p className="weather-card__condition">
+                      Condition: {destinationWeather.current.condition.text}
+                    </p>
+                  </div>
+                  <div className="weather-card__image">
+                    <img src={weatherImage} alt="Weather Icon" />
+                  </div>
                 </div>
               </div>
-            </div>
             )}
           </form>
         </div>
@@ -234,11 +244,21 @@ const UserForm = () => {
           "Loading..."
         )}
       </div>
-      <button onClick={handleMap}>Open Map</button>
-      {isMapShown && <MapDisplay markers={filteredrequiredPoints} />}
+      <br></br>
+      <div className="mapImg">
+        {filteredrequiredPoints != [] && (
+          <button className="mapBtn" onClick={handleMap}>
+            Open Map
+          </button>
+        )}
+        {isMapShown && !loading && (
+          <MapDisplay className="map" markers={filteredrequiredPoints} />
+        )}
+      </div>
+
+      
     </div>
   );
 };
-
 
 export default UserForm;
