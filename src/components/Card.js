@@ -1,5 +1,6 @@
 import React from "react";
 import "./card.css";
+import pin from '../pin.png'
 
 function Card({ name, address, distance, lat, long }) {
   const googleMapsLink = `https://www.google.com/maps/place/${lat},${long}`;
@@ -7,14 +8,36 @@ function Card({ name, address, distance, lat, long }) {
   const openGoogleMaps = () => {
     window.open(googleMapsLink, "_blank");
   };
+
+  const copyToClipboard = () => {
+    const textArea = document.createElement("textarea");
+    textArea.value = address;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+
+    window.alert("Address copied to clipboard!");
+  };
+
+
   return (
     <div className="card">
       <div className="card-content">
+        <div className="title">
+          <img src={pin} className="pin-image"></img>
         <div className="card-title">{name}</div>
-        <p className="card-text">
-          <strong>Address:</strong> {address}
+        </div>
+        <p className="card-text address" onClick={copyToClipboard} style={{ cursor: "pointer" }}>
+          <strong>Address:</strong> <span
+            className="copyable-address"
+            onClick={copyToClipboard}
+            style={{ cursor: "pointer" }}
+          >
+            {address}
+          </span>
         </p>
-        <p className="card-text">
+        <p className="card-text distance">
           <strong>Distance:</strong> {distance / 1000} km
         </p>
         <button className="google-maps-link" onClick={openGoogleMaps} >

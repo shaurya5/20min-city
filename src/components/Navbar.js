@@ -6,7 +6,7 @@ const Navbar = () => {
 
   return (
     <div className="logo">
-      <p className="logo-text">Welcome to 20 minutes city</p>
+      <p className="logo-text">Welcome to 20 min finds</p>
     </div>
   );
 };
