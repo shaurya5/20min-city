@@ -15,7 +15,7 @@ function MapDisplay({ initial, coordinates }) {
       />
       <Marker position={position}>
         <Popup>
-          Current Location
+          <p className='text-red-600'>Current Location</p>
         </Popup>
       </Marker>
       {coordinates.map((coordinate, index) => {
