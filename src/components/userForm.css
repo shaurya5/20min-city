@@ -9,7 +9,7 @@
     padding: 1rem;
     margin: 3rem;
     border-radius: 20px;
-    background-color: #3f3f3f;
+    /* background-color: #3f3f3f; */
   }
   
   .logo-img{
@@ -40,7 +40,7 @@
     border-radius: 4px;
     font-size: 1rem;
     transition: border-color 0.2s ease-in-out;
-    background-color: #282828;
+    /* background-color: #282828; */
   }
   
   .form-control:focus {

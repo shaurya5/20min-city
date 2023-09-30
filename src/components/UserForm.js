@@ -3,6 +3,7 @@ import axios from "axios";
 import Card from "./Card";
 import "./userForm.css";
 import logoImage from "../logo.png";
+import MapDisplay from "./MapDisplay";
 import weatherImage from "../weather.png";
 
 const UserForm = () => {
@@ -13,7 +14,9 @@ const UserForm = () => {
   const [loading, setLoading] = useState(false);
   const [transportMode, setTransportMode] = useState("car");
   const [destinationWeather, setDestinationWeather] = useState(null);
-
+  const [isMapShown, setIsMapShown] = useState(false)
+  
+  console.log(filteredRestaurants)
   const fetchWeatherData = async (lat, lng) => {
     try {
       const weatherApiKey = "0e16e90e8fbd4c9da78225559232909"; // Replace with your actual weather API key
@@ -124,6 +127,10 @@ const UserForm = () => {
     setButtonClicked(true);
   };
 
+  const handleMap = (e) => {
+    e.preventDefault();
+    setIsMapShown(!isMapShown);
+  }
   return (
 
     <div className="flex flex-row">
@@ -228,6 +235,8 @@ const UserForm = () => {
           "Loading..."
         )}
       </div>
+      <button onClick={handleMap}>Open Map</button>
+      {isMapShown && <MapDisplay markers={filteredRestaurants} />}
     </div>
   );
 };
