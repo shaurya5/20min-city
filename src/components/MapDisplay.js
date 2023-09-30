@@ -18,7 +18,7 @@ const MapDisplay = ({ markers }) => {
       <div className="row">
         <div className="col text-center">
           <div className="col">
-            <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef} style={{width: "800px", height: "800px"}}>
+            <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef} style={{width: "60vw", height: "60vh"}}>
               <TileLayer
                 url={osm.maptiler.url}
                 attribution={osm.maptiler.attribution}
